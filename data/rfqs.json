@@ -1,0 +1,72 @@
+[
+  {
+    "id": "LY-20261110-0001",
+    "created_at": "2026-11-10 09:30:15",
+    "updated_at": "2026-11-10 10:15:00",
+    "status": "quoted",
+    "company": "南科半導體設備股份有限公司 (Tainan Semicon Equipment Corp.)",
+    "contact_name": "陳建宏 研發部副理",
+    "country": "TAIWAN (台灣)",
+    "phone": "06-505-8899 #302",
+    "email": "jh.chen@example-semicon.com.tw",
+    "instant_messenger": "LINE: jhchen_semi",
+    "target_delivery": "2026-11-28",
+    "customer_notes": "大型自動化晶圓移載機台底座與真空腔體法蘭，需提供東京精密 3D CMM 三次元量測報告與鋁合金 6061-T651 原廠材質證明。",
+    "admin_notes": "已由廠長評估 WELE NB-2150 龍門銑床排程，預計 10 個工作天交貨，已提供正式報價單 #Q20261110-01。",
+    "items": [
+      {
+        "sku": "LY-GANTRY-2150A",
+        "name": "半導體與面板設備大型龍門銑床精密結構底座",
+        "material": "鋁合金 6061-T651",
+        "dimensions": "1850 × 1200 × 180 mm",
+        "tolerance": "±0.005 mm",
+        "surface": "本色陽極處理",
+        "qty": 2,
+        "unit_Note": "附 3D CMM 報告"
+      },
+      {
+        "sku": "LY-SEMI-VAC316",
+        "name": "半導體晶圓傳輸設備 SUS316L 不鏽鋼真空腔體法蘭",
+        "material": "不鏽鋼 SUS316L",
+        "dimensions": "420 × 420 × 95 mm",
+        "tolerance": "±0.005 mm",
+        "surface": "無塵室電解拋光 (EP)",
+        "qty": 6,
+        "unit_Note": "O-Ring 密封面無刀痕"
+      }
+    ],
+    "attachments": [],
+    "email_status": "Demo Record (Pre-loaded)",
+    "lang": "zh-TW"
+  },
+  {
+    "id": "LY-20261110-0002",
+    "created_at": "2026-11-10 14:12:40",
+    "updated_at": "2026-11-10 14:12:40",
+    "status": "pending",
+    "company": "Aether AI Server Technologies Inc.",
+    "contact_name": "Michael Vance (Sr. Mechanical Engineer)",
+    "country": "UNITED STATES",
+    "phone": "+1-408-555-0192",
+    "email": "m.vance@example-aether-ai.com",
+    "instant_messenger": "WhatsApp: +14085550192",
+    "target_delivery": "2026-12-05",
+    "customer_notes": "Need 25 sets of AI Server Liquid-Cooling Manifolds in 7075-T6 with Ra 0.4um sealing grooves. Please include discounted DHL Express shipping to San Jose, CA.",
+    "admin_notes": "待確認 DHL 棧板折扣運費與 AQ-1265 雙機排程。",
+    "items": [
+      {
+        "sku": "LY-AISRV-7075B",
+        "name": "AI Server Liquid-Cooling Manifold & High-Precision Thermal Chassis",
+        "material": "Aluminum 7075-T6",
+        "dimensions": "680 × 450 × 65 mm",
+        "tolerance": "±0.005 mm",
+        "surface": "Hard Anodizing + Chromate",
+        "qty": 25,
+        "unit_Note": "100% Leak & CMM Test"
+      }
+    ],
+    "attachments": [],
+    "email_status": "Demo Record (Pre-loaded)",
+    "lang": "en"
+  }
+]

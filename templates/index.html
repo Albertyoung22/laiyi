@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>{{ page_title }}</title>
+  <meta name="description" content="{{ page_description }}">
+  <meta name="keywords" content="錸億精密工業有限公司,台南CNC加工廠,台南CNC銑床加工,台南市安南區CNC,大型龍門銑床加工,半導體設備製造,精密金屬加工,三次元量測,檢具,治具,LAI YI Precision,Legacy Precision">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  <!-- OpenGraph SEO Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:title" content="{{ page_title }}">
+  <meta property="og:description" content="{{ page_description }}">
+  <meta property="og:image" content="{{ og_image }}">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet (清新自然・台南安南區風情 & 嚴格統一按鍵規範) -->
+  <link rel="stylesheet" href="/static/css/main.css">
+
+  <!-- Dynamic JSON-LD Structured Data (SSR) -->
+  <script id="dynamic-json-ld" type="application/ld+json">
+    {{ json_ld_str | safe }}
+  </script>
+
+  <!-- Initial SSR State for Zero-Latency SPA Hydration -->
+  <script>
+    window.__INITIAL_STATE__ = {{ initial_state_str | safe }};
+  </script>
+</head>
+<body>
+
+  <!-- Top Precision Bar (台南安南水岸深翠綠頂部條) -->
+  <div class="top-info-bar">
+    <div class="container top-info-inner">
+      <div class="top-metrics">
+        <span><i class="badge-dot"></i> <strong data-i18n="top.range">最大加工行程：2000 × 1500 × 810 mm</strong></span>
+        <span>🎯 <span data-i18n="top.tol">尺寸精度：±0.005 mm (東京精密 3D CMM)</span></span>
+        <span>✈️ <span data-i18n="top.ship">UPS / DHL 全球特約優惠運費</span></span>
+        <span>📞 <a href="tel:06-3565855" style="color:#fde047;font-weight:700;">06-3565855</a> / <a href="tel:0929-045-504" style="color:#ffffff;">0929-045-504</a></span>
+      </div>
+      <div class="top-actions">
+        <div class="lang-switcher" role="group" aria-label="Language Switcher">
+          <button type="button" class="lang-btn {% if lang == 'zh-TW' %}active{% endif %}" data-lang="zh-TW">繁中</button>
+          <button type="button" class="lang-btn {% if lang == 'en' %}active{% endif %}" data-lang="en">EN</button>
+          <button type="button" class="lang-btn {% if lang == 'ja' %}active{% endif %}" data-lang="ja">日本語</button>
+          <button type="button" class="lang-btn {% if lang == 'ko' %}active{% endif %}" data-lang="ko">한국어</button>
+        </div>
+        <a href="/admin" class="admin-top-link" data-i18n="nav.admin">🔐 業務後台</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Header -->
+  <header class="site-header">
+    <div class="container nav-inner">
+      <a href="/" class="brand-logo" data-route="home">
+        <img src="/assets/images/brand/logo-mark.png" alt="錸億精密工業有限公司" class="brand-logo-img" onerror="this.src='/assets/images/brand/logo-zh.png'">
+        <div class="brand-text-wrap">
+          <span class="brand-title" id="header-company-name">{{ company.short_name[lang] }}</span>
+          <span class="brand-sub">LAI YI PRECISION · TAINAN ANNAN</span>
+        </div>
+      </a>
+
+      <nav class="main-nav" id="main-nav">
+        <a href="/" class="nav-link {% if route_key == 'home' %}active{% endif %}" data-route="home" data-i18n="nav.home">首頁</a>
+        <a href="/about" class="nav-link {% if route_key == 'about' %}active{% endif %}" data-route="about" data-i18n="nav.about">關於錸億</a>
+        <a href="/products" class="nav-link {% if route_key == 'products' %}active{% endif %}" data-route="products" data-i18n="nav.products">產品與材質中心</a>
+        <a href="/equipment" class="nav-link {% if route_key == 'equipment' %}active{% endif %}" data-route="equipment" data-i18n="nav.equipment">CNC與量測設備</a>
+        <a href="/calculator" class="nav-link {% if route_key == 'calculator' %}active{% endif %}" data-route="calculator" data-i18n="nav.calculator">智慧規格試算</a>
+        <a href="/faq" class="nav-link {% if route_key == 'faq' %}active{% endif %}" data-route="faq" data-i18n="nav.faq">常見問題知識庫</a>
+        <a href="/news" class="nav-link {% if route_key == 'news' %}active{% endif %}" data-route="news" data-i18n="nav.news">科技新知</a>
+        <a href="/rfq" class="nav-link {% if route_key == 'rfq' %}active{% endif %}" data-route="rfq" data-i18n="nav.rfq">線上詢價 (RFQ)</a>
+      </nav>
+
+      <div class="header-cta-group">
+        <button type="button" class="rfq-cart-btn" data-route="rfq">
+          <span>📋 <span data-i18n="nav.rfq">線上詢價</span></span>
+          <span class="rfq-badge" id="header-rfq-badge">0</span>
+        </button>
+        <button type="button" class="mobile-menu-btn" onclick="document.getElementById('main-nav').classList.toggle('mobile-open')">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 台南市安南區人文與地理風情橫幅 (Annan Scenic Ribbon) -->
+  <div class="annan-scenic-banner">
+    <div class="container annan-banner-inner">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <span class="annan-pill">📍 台南市安南區安和路四段</span>
+        <span>🌿 鄰近台江國家公園水岸生態聚落 · 南科半導體與高科技產業鏈核心走廊</span>
+      </div>
+      <div style="display:flex;gap:12px;font-weight:700;">
+        <span>☀️ 晴朗南台灣暖陽製造基地</span>
+        <span>🌊 誠信踏實 · 永續經營</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- ========================================================================
+       SPA VIEW 1: HOME (首頁)
+       ======================================================================== -->
+  <main id="view-home" class="spa-view {% if route_key == 'home' %}active{% endif %}">
+    <section class="hero-section">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow-tag" data-i18n="hero.eyebrow">SINCE 2011 · 台南市安南區精密機械加工與半導體協力廠</div>
+          <h1 class="hero-title">
+            微米級 CNC 精密銑床與<br>
+            <span class="hero-title-highlight">2米大型龍門加工</span>領航者
+          </h1>
+          <p class="hero-desc" data-i18n="hero.subtitle">
+            錸億精密工業由三兄弟齊心創立，坐落於台南市安南區，深耕半導體設備、顯示面板、AI 伺服器散熱機構與高精密檢具/治具總成。配置日本與台灣頂級 CNC 銑床設備與東京精密三次元座標量測機，以自然純粹的匠人精神追求極致精度。
+          </p>
+
+          <!-- 3 顆等寬等高大按鍵 (高度嚴格統一 48px) -->
+          <div class="hero-btn-group">
+            <a href="/products" class="btn btn-lg btn-primary" data-route="products" data-i18n="hero.cta.products">瀏覽加工實績與材質</a>
+            <a href="/calculator" class="btn btn-lg btn-secondary" data-route="calculator" data-i18n="hero.cta.calculator">線上規格與價格試算</a>
+            <button type="button" class="btn btn-lg btn-tts" onclick="window.LaiYiApp.speakCompanyIntro()" data-i18n="hero.cta.tts">🔊 語音導覽企業介紹</button>
+          </div>
+
+          <div class="hero-kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-val">2011</div>
+              <div class="kpi-label" data-i18n="kpi.founded">台南安南創立傳承</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-val">2000<small style="font-size:0.8rem;">mm</small></div>
+              <div class="kpi-label" data-i18n="kpi.range">最大龍門加工範圍</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-val">±0.005<small style="font-size:0.8rem;">mm</small></div>
+              <div class="kpi-label" data-i18n="kpi.tolerance">微米級尺寸精度控制</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-val">3D CMM</div>
+              <div class="kpi-label" data-i18n="kpi.cmm">日本東京精密 3D 量測</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-showcase-card">
+          <div class="hero-img-slider">
+            <img src="/assets/images/brand/hero-banner-2.png" alt="錸億精密工業 CNC 加工廠與大型龍門銑床" onerror="this.src='/assets/images/equipment/wele-nb2150.png'">
+          </div>
+          <div class="hero-floating-spec">
+            <div>
+              <strong style="color:var(--accent-primary);">WELE NB-2150 大型CNC龍門銑床</strong>
+              <div style="color:var(--text-muted);font-size:0.78rem;">加工行程 2000×1500×810 mm · 東京精密 GS800D 三次元全檢</div>
+            </div>
+            <a href="/equipment" class="btn btn-sm btn-primary" data-route="equipment">查看設備 →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 Major Machining Material Groups -->
+    <section class="section-block">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow-tag">PRECISION MATERIALS</span>
+            <h2 class="section-title" data-i18n="home.mat.title">六大精密加工材質體系</h2>
+            <p class="section-subtitle" data-i18n="home.mat.sub">涵蓋碳鋼、合金鋼、航太鋁合金、黃銅、無塵室不鏽鋼至鈦合金與鈹銅，提供從選材、熱處理、表面處理到組裝的一站式服務。</p>
+          </div>
+          <a href="/products" class="btn btn-secondary" data-route="products" data-i18n="home.viewAll">檢視全部產品與規格 →</a>
+        </div>
+        <div class="grid-3" id="home-materials-grid"></div>
+      </div>
+    </section>
+
+    <!-- Featured Machined Components -->
+    <section class="section-block">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow-tag">PROVEN TRACK RECORD</span>
+            <h2 class="section-title" data-i18n="home.feat.title">精選 CNC 銑床與龍門加工實績</h2>
+            <p class="section-subtitle" data-i18n="home.feat.sub">服務國內外半導體、面板與 AI 上市公司供應鏈，點擊可檢視詳細規格或一鍵加入詢價清單。</p>
+          </div>
+          <a href="/products" class="btn btn-primary" data-route="products" data-i18n="home.viewAll">檢視全部產品與規格 →</a>
+        </div>
+        <div class="grid-3" id="home-featured-products"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       SPA VIEW 2: ABOUT US & CORE TECH ADVANTAGES (關於我們與核心優勢)
+       ======================================================================== -->
+  <section id="view-about" class="spa-view {% if route_key == 'about' %}active{% endif %}">
+    <div class="section-block">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow-tag">ABOUT LAI YI PRECISION · TAINAN ANNAN</span>
+            <h1 class="section-title" data-i18n="about.title">關於錸億精密工業與核心技術優勢</h1>
+            <p class="section-subtitle" data-i18n="about.sub">三兄弟齊心創立 · 誠信為本 · 高配合度 · 日本與台灣精密設備 · 東京精密 3D CMM 品保把關</p>
+          </div>
+          <button type="button" class="btn btn-tts" onclick="window.LaiYiApp.speakCompanyIntro()" data-i18n="hero.cta.tts">🔊 語音導覽企業介紹</button>
+        </div>
+
+        <div class="hero-grid" style="margin-bottom:48px;">
+          <div class="tech-card" style="padding:28px;">
+            <h2 style="font-size:1.35rem;color:var(--accent-primary);margin-bottom:14px;" data-i18n="about.story.title">企業沿革與經營理念</h2>
+            <p id="about-company-intro" style="color:var(--text-secondary);font-size:1rem;line-height:1.8;margin-bottom:20px;">
+              {{ company.intro[lang] }}
+            </p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+              <div class="kpi-card">
+                <div class="kpi-val">10mm ~ 2000mm</div>
+                <div class="kpi-label">全尺寸段 CNC 銑床與龍門加工能量</div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-val">±0.005 mm</div>
+                <div class="kpi-label">東京精密 GS800D 三次元品質驗證</div>
+              </div>
+            </div>
+          </div>
+          <div style="border-radius:16px;overflow:hidden;border:1px solid var(--border-subtle);box-shadow:var(--shadow-md);">
+            <img src="/assets/images/brand/about-company.png" alt="錸億精密工業有限公司廠房與團隊" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+        </div>
+
+        <!-- 4 Core Pillar Cards -->
+        <div class="grid-4">
+          <div class="tech-card" style="padding:24px;">
+            <div style="font-size:2rem;margin-bottom:10px;">⚙️</div>
+            <h3 class="card-title" data-i18n="about.core1.title">高精度 CNC 電腦銑床群</h3>
+            <p class="card-desc" data-i18n="about.core1.desc">配置東台高速加工機與崴立立式電腦銑床群，針對光學電子零件、醫療器材、航太鈦合金與精細五金零件提供 ±0.005mm 微米級精準度。</p>
+          </div>
+          <div class="tech-card" style="padding:24px;">
+            <div style="font-size:2rem;margin-bottom:10px;">🏗️</div>
+            <h3 class="card-title" data-i18n="about.core2.title">2000mm 大型 CNC 龍門銑床</h3>
+            <p class="card-desc" data-i18n="about.core2.desc">搭載崴立 WELE NB-2150 大型龍門加工機（2000×1500×810 mm），專門處理結構複雜且體積龐大的自動化設備底座與半導體框架。</p>
+          </div>
+          <div class="tech-card" style="padding:24px;">
+            <div style="font-size:2rem;margin-bottom:10px;">🔬</div>
+            <h3 class="card-title" data-i18n="about.core3.title">日本東京精密 GS800D 三次元品保</h3>
+            <p class="card-desc" data-i18n="about.core3.desc">廠內恆溫品保室配備 TOKYO SEIMITSU GS800D 三次元座標量測機、0級鎢鋼塊規與三點式內徑分釐卡，可隨貨出具正式檢驗報告。</p>
+          </div>
+          <div class="tech-card" style="padding:24px;">
+            <div style="font-size:2rem;margin-bottom:10px;">🌍</div>
+            <h3 class="card-title" data-i18n="about.core4.title">UPS / DHL 全球特約快速物流</h3>
+            <p class="card-desc" data-i18n="about.core4.desc">因外銷出貨量大（物流車每日駐廠收件），我們與 UPS、DHL 及國際海空運承攬商擁有極佳折扣，為海外客戶大幅節省國際運費成本。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SPA VIEW 3: PRODUCTS & MATERIALS CENTER (產品與規格檢索中心)
+       ======================================================================== -->
+  <section id="view-products" class="spa-view {% if route_key == 'products' %}active{% endif %}">
+    <div class="section-block">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow-tag">PRODUCT & MATERIAL SPECIFICATION HUB</span>
+            <h1 class="section-title" data-i18n="prod.title">精密加工產品與材質檢索中心</h1>
+            <p class="section-subtitle" data-i18n="prod.sub">支援多條件即時篩選、關鍵字檢索、語音規格朗讀，以及一鍵加入多品項線上詢價清單。</p>
+          </div>
+          <span class="eyebrow-tag" id="products-count-badge">16 ITEMS</span>
+        </div>
+
+        <!-- Multi-Criteria Real-Time Filter Toolbar -->
+        <div class="filter-toolbar">
+          <div class="category-pills" id="product-cat-pills">
+            <button type="button" class="cat-pill active" data-cat="all" data-i18n="cat.all">全部領域</button>
+            <button type="button" class="cat-pill" data-cat="semicon" data-i18n="cat.semicon">半導體與面板設備</button>
+            <button type="button" class="cat-pill" data-cat="ai-server" data-i18n="cat.ai-server">AI 伺服器與散熱</button>
+            <button type="button" class="cat-pill" data-cat="jig-gauge" data-i18n="cat.jig-gauge">精密檢具與治具</button>
+            <button type="button" class="cat-pill" data-cat="aerospace-medical" data-i18n="cat.aerospace-medical">航太與醫療器材</button>
+            <button type="button" class="cat-pill" data-cat="optical-electronics" data-i18n="cat.optical-electronics">光學與 3C 電子</button>
+            <button type="button" class="cat-pill" data-cat="automotive-machinery" data-i18n="cat.automotive-machinery">汽機車與自動化機械</button>
+          </div>
+
+          <div class="search-select-group">
+            <select id="product-material-filter" class="form-select" aria-label="Filter by Material"></select>
+            <input type="search" id="product-search-input" class="form-input" style="min-width:260px;"
+                   data-i18n-placeholder="filter.searchPlaceholder"
+                   placeholder="搜尋產品名稱、料號、材質 (如 6061, SUS316L, 龍門, 治具)...">
+          </div>
+        </div>
+
+        <!-- Product Cards Grid -->
+        <div class="grid-3" id="products-catalog-grid" style="margin-bottom:56px;"></div>
+
+        <!-- Material Technical Specification Table -->
+        <h2 class="section-title" style="font-size:1.45rem;margin-bottom:18px;" data-i18n="mat.table.title">加工材質技術規格與表面處理對照表</h2>
+        <div class="table-responsive">
+          <table class="precision-table">
+            <thead>
+              <tr>
+                <th data-i18n="mat.col.name">材質類別</th>
+                <th data-i18n="mat.col.grades">常用牌號 / 規格</th>
+                <th data-i18n="mat.col.density">密度 (g/cm³)</th>
+                <th data-i18n="mat.col.hardness">硬度範圍</th>
+                <th data-i18n="mat.col.surface">支援表面處理與熱處理</th>
+                <th data-i18n="mat.col.action">快速詢價</th>
+              </tr>
+            </thead>
+            <tbody id="materials-spec-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SPA VIEW 4: CNC & 3D CMM EQUIPMENT CENTER (設備介紹與量測中心)
+       ======================================================================== -->
+  <section id="view-equipment" class="spa-view {% if route_key == 'equipment' %}active{% endif %}">
+    <div class="section-block">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow-tag">CNC FLEET & 3D CMM METROLOGY</span>
+            <h1 class="section-title" data-i18n="eq.title">廠內 CNC 加工設備與三次元量測儀器</h1>
+            <p class="section-subtitle" data-i18n="eq.sub">引進日本與台灣一線品牌精密加工機與三次元座標量測設備，打造從 10mm 微細件到 2000mm 龍門大型件的完整製造能量。</p>
+          </div>
+          <div class="category-pills" id="eq-tab-pills">
+            <button type="button" class="cat-pill active" data-eqtab="all" data-i18n="eq.tab.all">全部設備</button>
+            <button type="button" class="cat-pill" data-eqtab="machining" data-i18n="eq.tab.machining">CNC 銑床與龍門加工設備</button>
+            <button type="button" class="cat-pill" data-eqtab="inspection" data-i18n="eq.tab.inspection">3D 三次元與精密量測設備</button>
+          </div>
+        </div>
+
+        <div class="grid-3" id="equipment-catalog-grid" style="margin-bottom:48px;"></div>
+
+        <!-- Equipment Specification Matrix Table -->
+        <h2 class="section-title" style="font-size:1.4rem;margin-bottom:18px;">廠內主力加工與檢驗設備清單總表</h2>
+        <div class="table-responsive" style="margin-bottom:48px;">
+          <table class="precision-table">
+            <thead>
+              <tr>
+                <th data-i18n="eq.col.brand">品牌</th>
+                <th data-i18n="eq.col.model">設備型號 / 名稱</th>
+                <th data-i18n="eq.col.range">加工 / 量測範圍</th>
+                <th data-i18n="eq.col.accuracy">精度指標</th>
+                <th data-i18n="eq.col.units">數量</th>
+              </tr>
+            </thead>
+            <tbody id="equipment-spec-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Real Factory & Metrology Gallery from laiyi-tw.com -->
+        <h2 class="section-title" style="font-size:1.4rem;margin-bottom:18px;">廠區生產與精密品保量具實景</h2>
+        <div class="grid-4">
+          <div class="tech-card"><div class="card-thumb"><img src="/assets/images/equipment/factory-1.gif" alt="錸億精密廠房實景 1"></div><div class="card-body"><div class="card-title">CNC 電腦銑床生產線實景</div></div></div>
+          <div class="tech-card"><div class="card-thumb"><img src="/assets/images/equipment/qc-1.gif" alt="東京精密三次元量測室"></div><div class="card-body"><div class="card-title">東京精密 GS800D 三次元量測室</div></div></div>
+          <div class="tech-card"><div class="card-thumb"><img src="/assets/images/equipment/gauge-block.jpg" alt="鎢鋼0級塊規"></div><div class="card-body"><div class="card-title">日本認證鎢鋼 0 級標準塊規組</div></div></div>
+          <div class="tech-card"><div class="card-thumb"><img src="/assets/images/equipment/ring-gauge.jpg" alt="標準環規與電子卡尺"></div><div class="card-body"><div class="card-title">標準校正環規與防水電子游標卡尺</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SPA VIEW 5: SMART CNC SPEC CALCULATOR (智慧規格/數量試算與機台匹配)
+       ======================================================================== -->
+  <section id="view-calculator" class="spa-view {% if route_key == 'calculator' %}active{% endif %}">
+    <div class="section-block">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow-tag">INTERACTIVE CNC ENGINEERING TOOL</span>
+            <h1 class="section-title" data-i18n="calc.title">智慧 CNC 加工規格試算與機台匹配工具</h1>
+            <p class="section-subtitle" data-i18n="calc.sub">輸入工件長寬高、材質與批量，系統自動計算毛坯重量、匹配廠內最佳 CNC 機台、模擬工作台排版並估算參考單價與交期。</p>
+          </div>
+        </div>
+
+        <div class="calc-grid">
+          <!-- Left Input Panel -->
+          <div class="calc-panel">
+            <div class="slider-row">
+              <div class="slider-header">
+                <label for="calc-length" data-i18n="calc.length">工件長度 L (mm)</label>
+                <span id="val-calc-length" style="color:var(--accent-primary);font-family:monospace;">280 mm</span>
+              </div>
+              <input type="range" id="calc-length" class="range-slider" min="10" max="2000" step="5" value="280">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <label for="calc-width" data-i18n="calc.width">工件寬度 W (mm)</label>
+                <span id="val-calc-width" style="color:var(--accent-primary);font-family:monospace;">180 mm</span>
+              </div>
+              <input type="range" id="calc-width" class="range-slider" min="10" max="1500" step="5" value="180">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <label for="calc-height" data-i18n="calc.height">工件高度/厚度 H (mm)</label>
+                <span id="val-calc-height" style="color:var(--accent-primary);font-family:monospace;">45 mm</span>
+              </div>
+              <input type="range" id="calc-height" class="range-slider" min="5" max="810" step="5" value="45">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <label for="calc-qty" data-i18n="calc.qty">預估批量 (PCS)</label>
+                <span id="val-calc-qty" style="color:var(--accent-sun);font-family:monospace;">10 PCS</span>
+              </div>
+              <input type="range" id="calc-qty" class="range-slider" min="1" max="500" step="1" value="10">
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px;">
+              <div>
+                <label style="display:block;font-size:0.84rem;margin-bottom:6px;color:var(--text-secondary);font-weight:700;" data-i18n="calc.material">選擇加工材質</label>
+                <select id="calc-material" class="form-select" style="width:100%;"></select>
+              </div>
+              <div>
+                <label style="display:block;font-size:0.84rem;margin-bottom:6px;color:var(--text-secondary);font-weight:700;" data-i18n="calc.tolerance">要求尺寸公差</label>
+                <select id="calc-tolerance" class="form-select" style="width:100%;">
+                  <option value="±0.005 mm">±0.005 mm (微米級高精密 + 3D CMM)</option>
+                  <option value="±0.01 mm">±0.01 mm (精密配合公差)</option>
+                  <option value="±0.02 mm">±0.02 mm (標準 CNC 公差)</option>
+                  <option value="±0.05 mm">±0.05 mm (一般結構公差)</option>
+                </select>
+              </div>
+              <div>
+                <label style="display:block;font-size:0.84rem;margin-bottom:6px;color:var(--text-secondary);font-weight:700;" data-i18n="calc.complexity">幾何複雜度</label>
+                <select id="calc-complexity" class="form-select" style="width:100%;">
+                  <option value="simple" data-i18n="calc.comp.simple">基礎銑削 / 鑽孔攻牙 (2.5D)</option>
+                  <option value="medium" selected data-i18n="calc.comp.medium">多面體精密腔體 / 治具配合</option>
+                  <option value="high" data-i18n="calc.comp.high">高複雜度 3D 曲面 / 深腔薄壁</option>
+                </select>
+              </div>
+              <div>
+                <label style="display:block;font-size:0.84rem;margin-bottom:6px;color:var(--text-secondary);font-weight:700;" data-i18n="calc.surface">表面處理需求</label>
+                <select id="calc-surface" class="form-select" style="width:100%;">
+                  <option value="standard" data-i18n="calc.surf.none">標準去毛刺原色 (As-Machined)</option>
+                  <option value="anodize" selected data-i18n="calc.surf.anodize">本色/黑色陽極處理 (Anodizing)</option>
+                  <option value="hard_anodize" data-i18n="calc.surf.hardAnodize">硬質陽極處理 (Hard Anodize)</option>
+                  <option value="enp" data-i18n="calc.surf.enp">無電解鎳 / 化鎳 (Electroless Nickel)</option>
+                  <option value="ep" data-i18n="calc.surf.ep">無塵室電解拋光 / 鈍化 (EP / Passivation)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Engineering Output & 2D Worktable Blueprint -->
+          <div class="calc-result-box">
+            <h3 style="font-size:1.15rem;color:var(--accent-primary);margin-bottom:16px;" data-i18n="calc.res.title">即時工程評估與機台匹配報告</h3>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--border-subtle);padding-bottom:14px;margin-bottom:16px;">
+              <div>
+                <div style="font-size:0.82rem;color:var(--text-muted);" data-i18n="calc.res.unitPrice">預估參考單價 (TWD)</div>
+                <div class="calc-price-highlight" id="res-unit-price">NT$ 2,680</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:0.82rem;color:var(--text-muted);" data-i18n="calc.res.totalPrice">批量預估總額</div>
+                <div style="font-size:1.1rem;font-weight:800;color:var(--text-main);" id="res-total-price">NT$ 26,800</div>
+              </div>
+            </div>
+
+            <table class="precision-table" style="font-size:0.86rem;margin-bottom:18px;">
+              <tr><th data-i18n="calc.res.rawWeight">單件毛坯重量</th><td id="res-raw-weight">6.85 kg</td></tr>
+              <tr><th data-i18n="calc.res.netWeight">單件成品淨重</th><td id="res-net-weight">4.25 kg</td></tr>
+              <tr><th data-i18n="calc.res.shipWeight">總裝箱預估毛重 (UPS/DHL)</th><td id="res-ship-weight">48.8 kg</td></tr>
+              <tr><th data-i18n="calc.res.machine">系統推薦主力加工機台</th><td id="res-machine" style="color:var(--accent-primary);font-weight:800;">TONGTAI TMV-800A</td></tr>
+              <tr><th data-i18n="calc.res.qc">品保檢驗標準配置</th><td id="res-qc">東京精密 GS800D 3D CMM</td></tr>
+              <tr><th data-i18n="calc.res.leadTime">預估標準交期 (工作天)</th><td id="res-lead-time" style="color:var(--accent-emerald);font-weight:800;">5 ~ 7 Days</td></tr>
+            </table>
+
+            <button type="button" class="btn btn-primary" style="width:100%;height:var(--btn-height-lg);" onclick="window.LaiYiApp.addCalculatedSpecToRfq()" data-i18n="calc.res.addBtn">
+              ＋ 將此客製試算規格加入詢價清單
+            </button>
+
+            <div class="blueprint-canvas-wrap">
+              <div style="font-size:0.82rem;color:var(--accent-primary);font-weight:700;margin-bottom:8px;" data-i18n="calc.blueprint.title">CNC 工作台自動排版模擬圖 (2D Worktable Nesting)</div>
+              <div id="blueprint-svg-container"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SPA VIEW 6: FAQ KNOWLEDGE BASE (常見問題知識庫)
+       ======================================================================== -->
+  <section id="view-faq" class="spa-view {% if route_key == 'faq' %}active{% endif %}">
+    <div class="section-block">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow-tag">TECHNICAL KNOWLEDGE BASE</span>
+            <h1 class="section-title" data-i18n="faq.title">常見問題與 CNC 加工技術知識庫</h1>
+            <p class="section-subtitle" data-i18n="faq.sub">快速解答公差精度、圖檔格式、打樣數量、三次元檢驗報告與全球快遞運費折扣等常見問題。</p>
+          </div>
+        </div>
+        <div id="faq-list-container"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SPA VIEW 7: TECH INSIGHTS & NEWS (科技新知)
+       ======================================================================== -->
+  <section id="view-news" class="spa-view {% if route_key == 'news' %}active{% endif %}">
+    <div class="section-block">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow-tag">INDUSTRY & AI TECH INSIGHTS</span>
+            <h1 class="section-title">科技新知與 AI 產業發展趨勢</h1>
+            <p class="section-subtitle">聚焦 Physical AI 機器人、AI 伺服器高散熱腔體、半導體大型龍門銑床加工與東京精密三次元量測前瞻技術解析。</p>
+          </div>
+        </div>
+        <div class="grid-3" id="news-catalog-grid">
+          {% for art in articles %}
+          <div class="tech-card">
+            <div class="card-body">
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                <span class="eyebrow-tag" style="height:26px;font-size:0.75rem;">{{ art.tag }}</span>
+                <span style="font-size:0.78rem;color:var(--text-muted);font-weight:600;">{{ art.date }}</span>
+              </div>
+              <h3 class="card-title">{{ art.title[lang] }}</h3>
+              <p class="card-desc">{{ art.summary[lang] }}</p>
+              <div class="card-footer-actions">
+                <button type="button" class="btn btn-sm btn-tts" onclick="window.LaiYiApp.speakRaw({{ art.summary[lang]|tojson }})">🔊 語音朗讀</button>
+                <a href="/rfq" class="btn btn-sm btn-primary" data-route="rfq">專案技術諮詢 →</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SPA VIEW 8: PRIVACY POLICY (隱私權保護政策)
+       ======================================================================== -->
+  <section id="view-privacy" class="spa-view {% if route_key == 'privacy' %}active{% endif %}">
+    <div class="section-block">
+      <div class="container" style="max-width:920px;">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow-tag">DATA PROTECTION & CONFIDENTIALITY</span>
+            <h1 class="section-title">隱私權保護政策 (Privacy Policy)</h1>
+            <p class="section-subtitle">錸億精密工業有限公司非常重視您的個人資料與專案工程圖檔機密保護，特此說明隱私權保護政策。</p>
+          </div>
+        </div>
+        <div class="calc-panel" style="font-size:0.92rem;line-height:1.8;color:var(--text-secondary);">
+          <p style="margin-bottom:14px;">非常歡迎您光臨本網站，為了讓您能夠安心的使用本網站的各項服務與資訊，特此向您說明本網站的隱私權保護政策，以保障您的權益，請您詳閱下列內容：</p>
+
+          <h3 style="color:var(--accent-primary);margin:16px 0 6px;">一、隱私權保護政策的適用範圍</h3>
+          <p style="margin-bottom:14px;">隱私權保護政策內容，包括本網站如何處理在您使用網站服務時收集到的個人識別資料與上傳之工程圖檔（PDF, DWG, STEP 等）。隱私權保護政策不適用於本網站以外的相關連結網站，也不適用於非本網站所委託或參與管理的人員。</p>
+
+          <h3 style="color:var(--accent-primary);margin:16px 0 6px;">二、個人資料與專案圖面之蒐集、處理及利用方式</h3>
+          <p style="margin-bottom:14px;">當您造訪本網站或使用線上詢價（RFQ）所提供之功能服務時，我們將視該服務功能性質，請您提供必要的公司名稱、聯絡人姓名、電話、電子郵件及工程圖檔，並在該報價評估與專案加工特定目的範圍內處理及利用您的資料；非經您書面同意，本網站絕不會將您的個人資料或專案圖面用於其他用途。</p>
+
+          <h3 style="color:var(--accent-primary);margin:16px 0 6px;">三、資料與工程圖檔之安全防護</h3>
+          <p style="margin-bottom:14px;">本網站主機均設有防火牆、防毒系統、HMAC 身分簽章及資料安全防護措施，客戶上傳之圖檔與詢價資料只由經過授權之工程與業務人員接觸，相關處理人員皆受保密義務規範，確保客戶智慧財產與商業機密滴水不漏。</p>
+
+          <h3 style="color:var(--accent-primary);margin:16px 0 6px;">四、Cookie 之使用</h3>
+          <p style="margin-bottom:14px;">為了提供您最佳的瀏覽體驗與語言切換設定，本網站會在您的瀏覽器中放置並取用我們的 Cookie / 本地暫存。您可在瀏覽器設定中拒絕寫入，此不影響基本瀏覽體驗。</p>
+
+          <h3 style="color:var(--accent-primary);margin:16px 0 6px;">五、聯繫管道</h3>
+          <p style="margin-top:10px;">
+            若對本站隱私權保護政策有任何疑問，歡迎隨時聯繫我們：<br>
+            📞 電話：06-3565855 ／ 0929-045-504<br>
+            ✉️ 信箱：<a href="mailto:laiyi.huang@msa.hinet.net" style="color:var(--accent-primary);font-weight:700;">laiyi.huang@msa.hinet.net</a><br>
+            🏭 地址：709029 台南市安南區安和路四段36巷276號
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SPA VIEW 9: ONLINE RFQ & DRAWING UPLOAD (線上詢價單與檔案上傳)
+       ======================================================================== -->
+  <section id="view-rfq" class="spa-view {% if route_key == 'rfq' %}active{% endif %}">
+    <div class="section-block">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow-tag">ONLINE REQUEST FOR QUOTATION (RFQ)</span>
+            <h1 class="section-title" data-i18n="rfq.title">線上詢價單 (RFQ) 與工程圖檔上傳</h1>
+            <p class="section-subtitle" data-i18n="rfq.sub">支援多品項整合詢價與 2D/3D 工程圖檔上傳（PDF / DWG / DXF / STEP / IGES / JPG / ZIP），提交後系統自動寄發確認信。</p>
+          </div>
+        </div>
+
+        <div id="rfq-success-banner" style="display:none;background:#ecfdf5;border:1px solid #10b981;padding:20px;border-radius:12px;margin-bottom:28px;"></div>
+
+        <div class="rfq-layout">
+          <!-- Left: Multi-Item RFQ List & Company Direct Contact Card -->
+          <div>
+            <div class="calc-panel" style="margin-bottom:24px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+                <h2 style="font-size:1.15rem;color:var(--accent-primary);" data-i18n="rfq.cartTitle">已選詢價品項清單</h2>
+                <div style="display:flex;gap:8px;">
+                  <button type="button" class="btn btn-sm btn-secondary" onclick="window.LaiYiApp.addCustomRfqRow()" data-i18n="rfq.addCustomRow">＋ 新增自訂加工品項</button>
+                  <button type="button" class="btn btn-sm btn-danger" onclick="window.LaiYiApp.clearCart()" data-i18n="rfq.clearCart">清空清單</button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="precision-table" style="font-size:0.82rem;">
+                  <thead>
+                    <tr>
+                      <th>品項名稱</th>
+                      <th>材質</th>
+                      <th>尺寸 (mm)</th>
+                      <th>公差</th>
+                      <th>數量</th>
+                      <th>刪除</th>
+                    </tr>
+                  </thead>
+                  <tbody id="rfq-items-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Direct Contact & Google Map Embed -->
+            <div class="calc-panel">
+              <h3 style="font-size:1.1rem;color:var(--accent-primary);margin-bottom:12px;">📍 錸億精密工業有限公司 聯絡資訊</h3>
+              <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.9;">
+                📞 <strong>服務專線</strong>：<a href="tel:06-3565855" style="color:var(--accent-primary);font-weight:700;">06-3565855</a> ／ <a href="tel:0929-045-504" style="color:var(--accent-primary);font-weight:700;">0929-045-504</a><br>
+                📠 <strong>傳真號碼</strong>：06-3562100<br>
+                ✉️ <strong>電子信箱</strong>：<a href="mailto:laiyi.huang@msa.hinet.net" style="color:var(--accent-primary);font-weight:700;">laiyi.huang@msa.hinet.net</a><br>
+                🏭 <strong>工廠地址</strong>：<a href="https://www.google.com/maps?q=709029台南市安南區安和路四段36巷276號" target="_blank" rel="noopener" style="color:var(--accent-primary);font-weight:700;">709029 台南市安南區安和路四段36巷276號</a>
+              </p>
+            </div>
+          </div>
+
+          <!-- Right: Customer Contact & File Upload Form -->
+          <div class="calc-panel">
+            <h2 style="font-size:1.2rem;color:var(--text-main);margin-bottom:18px;" data-i18n="rfq.formTitle">客戶聯絡資訊與專案圖檔上傳</h2>
+            <form id="online-rfq-form">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+                <div>
+                  <label style="display:block;font-size:0.84rem;margin-bottom:5px;font-weight:700;" data-i18n="rfq.company">公司名稱 *</label>
+                  <input type="text" id="rfq-company" class="form-input" style="width:100%;" required placeholder="例如：XX科技股份有限公司">
+                </div>
+                <div>
+                  <label style="display:block;font-size:0.84rem;margin-bottom:5px;font-weight:700;" data-i18n="rfq.contactName">聯絡人姓名 *</label>
+                  <input type="text" id="rfq-contact-name" class="form-input" style="width:100%;" required placeholder="請輸入您的稱呼">
+                </div>
+                <div>
+                  <label style="display:block;font-size:0.84rem;margin-bottom:5px;font-weight:700;" data-i18n="rfq.country">國家 / 地區</label>
+                  <select id="rfq-country" class="form-select" style="width:100%;">
+                    <option value="TAIWAN (台灣)">TAIWAN (台灣)</option>
+                    <option value="UNITED STATES">UNITED STATES (美國)</option>
+                    <option value="JAPAN">JAPAN (日本)</option>
+                    <option value="KOREA, REPUBLIC OF">SOUTH KOREA (韓國)</option>
+                    <option value="GERMANY">GERMANY (德國)</option>
+                    <option value="SINGAPORE">SINGAPORE (新加坡)</option>
+                    <option value="OTHER">OTHER (其他國家/地區)</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="display:block;font-size:0.84rem;margin-bottom:5px;font-weight:700;" data-i18n="rfq.phone">聯絡電話 *</label>
+                  <input type="tel" id="rfq-phone" class="form-input" style="width:100%;" required placeholder="06-XXXXXXX 或手機">
+                </div>
+                <div>
+                  <label style="display:block;font-size:0.84rem;margin-bottom:5px;font-weight:700;" data-i18n="rfq.email">電子信箱 (接收確認信與報價單) *</label>
+                  <input type="email" id="rfq-email" class="form-input" style="width:100%;" required placeholder="name@company.com">
+                </div>
+                <div>
+                  <label style="display:block;font-size:0.84rem;margin-bottom:5px;font-weight:700;" data-i18n="rfq.im">LINE ID / WhatsApp / WeChat</label>
+                  <input type="text" id="rfq-im" class="form-input" style="width:100%;" placeholder="選填，方便工程師即時對圖">
+                </div>
+              </div>
+
+              <div style="margin-bottom:16px;">
+                <label style="display:block;font-size:0.84rem;margin-bottom:5px;font-weight:700;" data-i18n="rfq.delivery">期望交貨日期</label>
+                <input type="date" id="rfq-delivery" class="form-input" style="width:100%;">
+              </div>
+
+              <div style="margin-bottom:16px;">
+                <label style="display:block;font-size:0.84rem;margin-bottom:6px;font-weight:700;" data-i18n="rfq.uploadLabel">上傳 2D/3D 工程圖檔或零件照片 (支援多檔拖曳上傳)</label>
+                <div class="dropzone-area" id="rfq-dropzone">
+                  <div style="font-size:1.8rem;margin-bottom:6px;">📂</div>
+                  <div style="font-weight:800;color:var(--accent-primary);">點擊選擇檔案 或將 2D/3D 工程圖檔拖曳至此處</div>
+                  <div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;" data-i18n="rfq.uploadHint">支援格式：PDF, DWG, DXF, STEP, STP, IGES, JPG, PNG, ZIP, RAR (單次上限 50MB)</div>
+                  <input type="file" id="rfq-file-input" multiple style="display:none;"
+                         accept=".pdf,.png,.jpg,.jpeg,.webp,.gif,.dwg,.dxf,.step,.stp,.iges,.igs,.stl,.zip,.rar,.7z">
+                </div>
+                <div id="rfq-selected-files"></div>
+              </div>
+
+              <div style="margin-bottom:20px;">
+                <label style="display:block;font-size:0.84rem;margin-bottom:5px;font-weight:700;" data-i18n="rfq.notes">加工特殊要求與備註 (如熱處理 HRC、陽極顏色、是否需附三次元報告)</label>
+                <textarea id="rfq-notes" rows="4" class="form-textarea" style="width:100%;"
+                          placeholder="請填寫材質、表面處理、公差重點或國際快遞運送需求..."></textarea>
+              </div>
+
+              <button type="submit" id="rfq-submit-btn" class="btn btn-lg btn-primary" style="width:100%;" data-i18n="rfq.submitBtn">
+                🚀 立即送出線上詢價單
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Detail Modal -->
+  <div class="modal-backdrop" id="product-detail-modal" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="modal-card" id="product-modal-content"></div>
+  </div>
+
+  <!-- Edge-TTS Floating Audio Status Bar -->
+  <div class="tts-player-bar" id="tts-player-bar">
+    <span id="tts-status-text">🔊 語音導覽播放中...</span>
+    <button type="button" class="btn btn-sm btn-secondary" onclick="window.LaiYiApp.stopTts()">⏹ 停止</button>
+  </div>
+
+  <!-- Bottom-Right Smart AI Customer Service Assistant -->
+  <div class="ai-widget-container">
+    <div class="ai-chat-window" id="ai-chat-window">
+      <div class="ai-chat-header">
+        <div>
+          <strong style="font-size:0.95rem;">🤖 錸億精密 AI 工程顧問</strong>
+          <div style="font-size:0.72rem;color:rgba(255,255,255,0.85);">台南安南區 24H 即時解答加工尺寸、材質與詢價</div>
+        </div>
+        <button type="button" style="background:none;border:none;color:#ffffff;font-size:1.2rem;cursor:pointer;" onclick="window.LaiYiApp.toggleAiChat()">✕</button>
+      </div>
+      <div class="ai-chat-messages" id="ai-chat-messages">
+        <div class="chat-bubble bot">
+          您好！我是<strong>錸億精密工業 AI 智慧工程助手</strong>。我們位於<strong>台南市安南區</strong>，專精於 <strong>±0.005mm CNC 銑床加工</strong> 與 <strong>2000mm 大型 CNC 龍門銑床加工</strong>，並配備日本東京精密三次元量測機。請問需要什麼協助呢？
+        </div>
+      </div>
+      <div class="ai-quick-chips">
+        <button type="button" class="chip-btn" onclick="window.LaiYiApp.sendAiMessage('最大龍門加工尺寸與機台？')">最大龍門尺寸？</button>
+        <button type="button" class="chip-btn" onclick="window.LaiYiApp.sendAiMessage('最高尺寸精度與三次元量測？')">±0.005mm 精度與三次元</button>
+        <button type="button" class="chip-btn" onclick="window.LaiYiApp.sendAiMessage('支援哪些加工材質？')">支援加工材質</button>
+        <button type="button" class="chip-btn" onclick="window.LaiYiApp.sendAiMessage('如何線上試算價格與詢價？')">線上試算與報價</button>
+      </div>
+      <div class="ai-chat-input-bar">
+        <input type="text" id="ai-chat-input" class="form-input" style="flex:1;height:38px;padding:0 12px;font-size:0.85rem;"
+               placeholder="輸入問題 (如: 龍門尺寸、鈦合金、三次元)..."
+               onkeydown="if(event.key==='Enter')window.LaiYiApp.sendAiMessage()">
+        <button type="button" class="btn btn-sm btn-primary" onclick="window.LaiYiApp.sendAiMessage()">發送</button>
+      </div>
+    </div>
+    <button type="button" class="ai-fab-btn" onclick="window.LaiYiApp.toggleAiChat()" title="AI 智慧工程客服助手">💬</button>
+  </div>
+
+  <!-- Site Footer (台南安南水岸深綠) -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3 style="color:#ffffff;font-size:1.15rem;margin-bottom:10px;">錸億精密工業有限公司 (LAI YI Precision)</h3>
+          <p style="margin-bottom:12px;line-height:1.75;">
+            成立於 2011 年，座落於<strong>台南市安南區</strong>，由三兄弟齊心創立。專業 CNC 電腦銑床與 2000mm 大型 CNC 龍門銑床加工廠，深耕半導體、面板、AI 伺服器散熱機構與精密檢具治具製造。
+          </p>
+          <p id="footer-address" style="color:#fef08a;font-weight:700;">📍 709029 台南市安南區安和路四段36巷276號</p>
+        </div>
+        <div>
+          <h4 style="color:#ffffff;margin-bottom:10px;">快速導覽</h4>
+          <ul style="list-style:none;line-height:2.1;">
+            <li><a href="/" data-route="home">首頁 (Home)</a></li>
+            <li><a href="/about" data-route="about">關於我們與核心優勢</a></li>
+            <li><a href="/products" data-route="products">產品與加工材質中心</a></li>
+            <li><a href="/equipment" data-route="equipment">CNC 與東京精密三次元設備</a></li>
+            <li><a href="/news" data-route="news">科技新知與 AI 趨勢</a></li>
+            <li><a href="/privacy" data-route="privacy">隱私權保護政策</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="color:#ffffff;margin-bottom:10px;">智慧工程服務</h4>
+          <ul style="list-style:none;line-height:2.1;">
+            <li><a href="/calculator" data-route="calculator">線上 CNC 規格與價格試算</a></li>
+            <li><a href="/faq" data-route="faq">常見問題與技術知識庫</a></li>
+            <li><a href="/rfq" data-route="rfq">線上詢價單 (RFQ 圖檔上傳)</a></li>
+            <li><a href="/admin" style="color:#fde047;font-weight:700;">業務管理後台 (Admin CRM)</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="color:#ffffff;margin-bottom:10px;">聯絡我們</h4>
+          <p>電話：<a href="tel:06-3565855" style="color:#ffffff;font-weight:700;">06-3565855</a> / 0929-045-504</p>
+          <p>傳真：06-3562100</p>
+          <p>信箱：<a href="mailto:laiyi.huang@msa.hinet.net" style="color:#a7f3d0;">laiyi.huang@msa.hinet.net</a></p>
+          <p style="margin-top:8px;font-size:0.78rem;color:#86efac;">系統健康狀態：<a href="/api/health" target="_blank" style="color:#fde047;">● Cloud Keep-Alive & Backup Active</a></p>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,0.15);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:0.82rem;">
+        <span>© 2011-2026 錸億精密工業有限公司 (LAI YI Precision Industrial Co., Ltd. / Legacy Precision Inc.) All Rights Reserved.</span>
+        <span>台南市安南區在地深耕 · 精密金屬加工製造協力廠</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/static/js/i18n.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

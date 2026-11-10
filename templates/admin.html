@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>業務管理後台 (Admin CRM)｜錸億精密工業有限公司</title>
+  <link rel="stylesheet" href="/static/css/main.css">
+  <style>
+    .admin-header {
+      background: linear-gradient(90deg, #0f4c45 0%, #0f766e 60%, #0369a1 100%);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(15, 118, 110, 0.15);
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .status-pending { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    .status-reviewing { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .status-quoted { background: #f3e8ff; color: #7e22ce; border: 1px solid #e9d5ff; }
+    .status-won { background: #d1fae5; color: #047857; border: 1px solid #a7f3d0; }
+    .status-archived { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+    .admin-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .admin-action-group {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .admin-action-group .btn {
+      height: var(--btn-height-sm);
+      min-height: var(--btn-height-sm);
+      padding: 0 12px;
+      font-size: 0.82rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="admin-header">
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <img src="/assets/images/brand/logo-mark.png" alt="Logo" style="height:38px;background:#fff;padding:3px 6px;border-radius:6px;">
+        <div>
+          <strong style="font-size:1.08rem;color:#fff;">錸億精密工業 — 企業級智慧詢價業務管理後台 (Admin CRM)</strong>
+          <div style="font-size:0.75rem;color:#bbf7d0;">台南市安南區 · HMAC 安全驗證 · 自動郵件通知 · GitHub (cloud-backup) 雲端防護</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <a href="/" class="btn btn-sm btn-secondary" style="background:#ffffff;color:var(--accent-primary);">← 返回前台官網</a>
+        <button type="button" id="admin-logout-btn" class="btn btn-sm btn-danger" style="display:none;" onclick="window.AdminCRM.logout()">登出系統</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Login Panel -->
+  <section id="admin-login-view" class="container" style="max-width:460px;margin:80px auto;">
+    <div class="calc-panel" style="text-align:center;">
+      <div style="font-size:2.4rem;margin-bottom:10px;">🔐</div>
+      <h1 style="font-size:1.35rem;margin-bottom:8px;color:var(--text-main);">業務管理後台登入</h1>
+      <p style="font-size:0.86rem;color:var(--text-muted);margin-bottom:20px;line-height:1.6;">
+        受 HMAC-SHA256 簽章保護。請輸入管理員密碼以檢視詢價單、下載客戶工程圖檔與設定郵件/雲端備份。<br>
+        <span style="color:var(--accent-sun);font-weight:700;">(預設測試密碼：<code>laiyi888</code>，可透過環境變數 ADMIN_PASSWORD 修改)</span>
+      </p>
+      <form id="admin-login-form">
+        <input type="password" id="admin-password-input" class="form-input" style="width:100%;margin-bottom:14px;text-align:center;"
+               placeholder="請輸入管理員密碼..." value="laiyi888" required>
+        <button type="submit" class="btn btn-lg btn-primary" style="width:100%;">驗證登入 (HMAC Login)</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Main CRM Console (Shown after login) -->
+  <main id="admin-dashboard-view" class="container" style="display:none;padding-top:28px;padding-bottom:64px;">
+
+    <!-- KPI Row -->
+    <div class="hero-kpi-grid" style="grid-template-columns:repeat(5, 1fr);margin-bottom:24px;">
+      <div class="kpi-card"><div class="kpi-val" id="kpi-total">0</div><div class="kpi-label">總詢價單數 (Total RFQs)</div></div>
+      <div class="kpi-card" style="border-top-color:#f59e0b;"><div class="kpi-val" id="kpi-pending" style="color:#d97706;">0</div><div class="kpi-label">待處理 (Pending)</div></div>
+      <div class="kpi-card" style="border-top-color:#0284c7;"><div class="kpi-val" id="kpi-reviewing" style="color:#0284c7;">0</div><div class="kpi-label">評估報價中 (Reviewing)</div></div>
+      <div class="kpi-card" style="border-top-color:#7e22ce;"><div class="kpi-val" id="kpi-quoted" style="color:#7e22ce;">0</div><div class="kpi-label">已報價 (Quoted)</div></div>
+      <div class="kpi-card" style="border-top-color:#059669;"><div class="kpi-val" id="kpi-won" style="color:#059669;">0</div><div class="kpi-label">已成交/生產中 (Won)</div></div>
+    </div>
+
+    <!-- Navigation Tabs (統一高度 38px 膠囊切換按鈕) -->
+    <div class="admin-tabs">
+      <button type="button" class="cat-pill active" id="tab-btn-rfqs" onclick="window.AdminCRM.switchTab('rfqs')">📋 客戶詢價單管理 (RFQ List)</button>
+      <button type="button" class="cat-pill" id="tab-btn-settings" onclick="window.AdminCRM.switchTab('settings')">⚙️ 郵件通知與雲端防遺失設定 (SMTP & Cloud Backup)</button>
+    </div>
+
+    <!-- TAB 1: RFQ Management -->
+    <section id="admin-tab-rfqs">
+      <div class="filter-toolbar">
+        <div class="category-pills" id="admin-status-pills">
+          <button type="button" class="cat-pill active" data-status="all">全部狀態</button>
+          <button type="button" class="cat-pill" data-status="pending">待處理</button>
+          <button type="button" class="cat-pill" data-status="reviewing">評估報價中</button>
+          <button type="button" class="cat-pill" data-status="quoted">已報價</button>
+          <button type="button" class="cat-pill" data-status="won">已成交/生產中</button>
+          <button type="button" class="cat-pill" data-status="archived">已結案</button>
+        </div>
+        <div class="search-select-group">
+          <input type="search" id="admin-search-input" class="form-input" style="min-width:240px;" placeholder="搜尋單號、公司、聯絡人、材質..." oninput="window.AdminCRM.renderTable()">
+          <button type="button" class="btn btn-sm btn-secondary" onclick="window.AdminCRM.loadRfqs()">🔄 重新整理</button>
+          <button type="button" class="btn btn-sm btn-primary" onclick="window.AdminCRM.exportCsv()">📥 匯出 CSV 報表</button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="precision-table">
+          <thead>
+            <tr>
+              <th>詢價單號 / 時間</th>
+              <th>處理狀態</th>
+              <th>客戶公司與聯絡人</th>
+              <th>聯絡方式</th>
+              <th>詢價品項摘要</th>
+              <th>客戶附件圖檔</th>
+              <th>業務內部備註</th>
+              <th style="text-align:center;">操作</th>
+            </tr>
+          </thead>
+          <tbody id="admin-rfq-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 2: Email Notification & Cloud Backup Settings -->
+    <section id="admin-tab-settings" style="display:none;">
+      <div class="rfq-layout">
+        <!-- Left: Automated SMTP Email Settings -->
+        <div class="calc-panel">
+          <h2 style="font-size:1.2rem;color:var(--accent-primary);margin-bottom:8px;">✉️ 自動化郵件通知參數設定 (SMTP)</h2>
+          <p style="font-size:0.84rem;color:var(--text-muted);margin-bottom:18px;">
+            當客戶提交線上詢價單時，系統將透過背景非同步執行緒自動寄送「含客戶上傳圖檔附件」的通知信給管理員，並寄發確認信給客戶。
+          </p>
+          <div style="margin-bottom:14px;">
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:700;color:var(--accent-sun);">
+              <input type="checkbox" id="set-smtp-enabled"> 啟用客戶詢價自動寄信通知
+            </label>
+          </div>
+          <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:12px;">
+            <div>
+              <label style="display:block;font-size:0.82rem;margin-bottom:4px;font-weight:700;">SMTP 伺服器主機 (Host)</label>
+              <input type="text" id="set-smtp-host" class="form-input" style="width:100%;" placeholder="smtp.gmail.com">
+            </div>
+            <div>
+              <label style="display:block;font-size:0.82rem;margin-bottom:4px;font-weight:700;">連接埠 (Port)</label>
+              <input type="number" id="set-smtp-port" class="form-input" style="width:100%;" value="587">
+            </div>
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="display:block;font-size:0.82rem;margin-bottom:4px;font-weight:700;">寄件人顯示名稱</label>
+            <input type="text" id="set-smtp-sender-name" class="form-input" style="width:100%;" placeholder="錸億精密工業 智慧詢價系統">
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="display:block;font-size:0.82rem;margin-bottom:4px;font-weight:700;">SMTP 寄件帳號 (Email)</label>
+            <input type="email" id="set-smtp-user" class="form-input" style="width:100%;" placeholder="your.account@gmail.com">
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="display:block;font-size:0.82rem;margin-bottom:4px;font-weight:700;">SMTP 密碼 / Google 應用程式專用密碼 (App Password)</label>
+            <input type="password" id="set-smtp-password" class="form-input" style="width:100%;" placeholder="16位元應用程式密碼">
+          </div>
+          <div style="margin-bottom:18px;">
+            <label style="display:block;font-size:0.82rem;margin-bottom:4px;font-weight:700;">接收詢價通知之管理員信箱 (Admin Recipient Email)</label>
+            <input type="email" id="set-admin-email" class="form-input" style="width:100%;" placeholder="laiyi.huang@msa.hinet.net">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <button type="button" class="btn btn-primary" onclick="window.AdminCRM.saveSettings()">💾 儲存設定</button>
+            <button type="button" class="btn btn-secondary" onclick="window.AdminCRM.sendTestEmail()">📨 發送測試信</button>
+          </div>
+        </div>
+
+        <!-- Right: Cloud Data Persistence & GitHub cloud-backup Branch -->
+        <div class="calc-panel">
+          <h2 style="font-size:1.2rem;color:var(--accent-emerald);margin-bottom:8px;">☁️ 雲端資料持久化與防遺失機制</h2>
+          <p style="font-size:0.84rem;color:var(--text-muted);margin-bottom:16px;">
+            針對雲端平台重啟或重新部署可能清空本地容器檔案的問題，系統實作 <strong>GitHub 專屬備份分支（<code>cloud-backup</code>）自動備份與啟動自動還原</strong>（Commit 附帶 <code>[skip ci]</code> 避免無限觸發部署），並相容外部 PostgreSQL 與 Google Sheets 同步。
+          </p>
+
+          <div style="background:var(--bg-soft);border:1px solid #b7dbd0;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:0.83rem;">
+            <div>📌 <strong>目前備份狀態</strong>：<span id="cloud-status-text" style="color:var(--accent-primary);font-weight:700;">Ready</span></div>
+            <div>🕒 <strong>最後備份時間</strong>：<span id="cloud-last-backup">尚未執行遠端推送</span></div>
+            <div>🔄 <strong>最後還原時間</strong>：<span id="cloud-last-restore">系統啟動自動檢查</span></div>
+          </div>
+
+          <div style="margin-bottom:12px;">
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:700;color:var(--accent-primary);">
+              <input type="checkbox" id="set-gh-enabled"> 啟用 GitHub 專屬分支 (cloud-backup) 自動同步備份
+            </label>
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="display:block;font-size:0.82rem;margin-bottom:4px;font-weight:700;">GitHub Repository (格式：<code>owner/repo</code>)</label>
+            <input type="text" id="set-gh-repo" class="form-input" style="width:100%;" placeholder="例如：laiyi-tw/laiyi-portal">
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="display:block;font-size:0.82rem;margin-bottom:4px;font-weight:700;">GitHub Personal Access Token (具 repo 權限)</label>
+            <input type="password" id="set-gh-token" class="form-input" style="width:100%;" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="display:block;font-size:0.82rem;margin-bottom:4px;font-weight:700;">GitHub 專屬備份分支名稱</label>
+            <input type="text" id="set-gh-branch" class="form-input" style="width:100%;" value="cloud-backup">
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="display:block;font-size:0.82rem;margin-bottom:4px;font-weight:700;">外部 PostgreSQL 連線字串 (DATABASE_URL，選填)</label>
+            <input type="text" id="set-db-url" class="form-input" style="width:100%;" placeholder="postgresql://user:pass@host:5432/dbname">
+          </div>
+          <div style="margin-bottom:16px;">
+            <label style="display:block;font-size:0.82rem;margin-bottom:4px;font-weight:700;">Google Sheets Webhook URL (Apps Script 同步，選填)</label>
+            <input type="text" id="set-gsheets-url" class="form-input" style="width:100%;" placeholder="https://script.google.com/macros/s/.../exec">
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:8px;">
+            <button type="button" class="btn btn-sm btn-primary" onclick="window.AdminCRM.saveSettings()">💾 儲存雲端參數</button>
+            <button type="button" class="btn btn-sm btn-tts" onclick="window.AdminCRM.triggerCloudAction('backup')">☁️ 推送備份</button>
+            <button type="button" class="btn btn-sm btn-secondary" onclick="window.AdminCRM.triggerCloudAction('restore')">📥 雲端還原</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- RFQ Detail & Edit Modal -->
+  <div class="modal-backdrop" id="admin-rfq-modal" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="modal-card" id="admin-rfq-modal-body" style="max-width:860px;"></div>
+  </div>
+
+  <script src="/static/js/admin.js"></script>
+</body>
+</html>

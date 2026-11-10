@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+data/tts_cache/*.mp3
+data/uploads/*
+!data/uploads/.gitkeep
+.env
+.venv
+env/
+venv/

@@ -1,0 +1,20 @@
+{
+  "smtp_enabled": false,
+  "smtp_host": "smtp.gmail.com",
+  "smtp_port": 587,
+  "smtp_use_tls": true,
+  "smtp_user": "",
+  "smtp_password": "",
+  "smtp_sender_name": "錸億精密工業 智慧詢價系統",
+  "admin_notify_email": "laiyi.huang@msa.hinet.net",
+  "github_backup_enabled": false,
+  "github_token": "",
+  "github_repo": "",
+  "github_branch": "cloud-backup",
+  "database_url": "",
+  "google_sheets_webhook": "",
+  "keep_alive_url": "",
+  "last_backup_time": null,
+  "last_backup_status": "Ready (Local + Cloud Sync Armed)",
+  "last_restore_time": null
+}

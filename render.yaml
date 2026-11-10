@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: laiyi-precision-portal
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --threads 4 --timeout 120
+    healthCheckPath: /api/health
+    envVars:
+      - key: ADMIN_PASSWORD
+        value: laiyi888
+      - key: SECRET_KEY
+        generateValue: true
+      - key: GITHUB_BACKUP_BRANCH
+        value: cloud-backup
+
